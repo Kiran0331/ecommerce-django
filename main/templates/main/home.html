@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Here</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">My shop</h1>
+        <div class="text-end mb-3">
+            <a href="{% url 'cart' %}" class="btn btn-warning">🛒 View Cart</a>
+
+            </div>
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        {% if product.image %}
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#productModal{{product.id}}">
+                        <img src="{{product.image.url}}" class="card-img-top img-thumbnail" style="height: 250px; object-fit: cover; " alt="{{product.name}}">   
+
+                        </a>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description|truncatechars:80}}</p>
+                            <p class="card-text fw-bold"><strong>₹</strong>{{product.price}}</p>
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="productModal{{product.id}}" tabindex="-1" aria-labelledby="modalLabel{{product.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <img src="{{product.image.url}}" class="img-fluid rounded" alt="{{product.name}}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+</body>
+</html>
